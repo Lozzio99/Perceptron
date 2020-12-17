@@ -50,8 +50,6 @@ public class pract2
         double end =System.nanoTime()-START;
         long convert = MILLISECONDS.convert((long) end, NANOSECONDS);
         System.out.println(String.format("Time needed > %s  ms", convert));
-
-
     }
 
     public static void setPerceptron()  //implementation of the abstract class Neuron
@@ -59,13 +57,14 @@ public class pract2
         perceptron = new Neuron()   //initialize perceptron with the constructor providing given weights
         {
             /**
-             * Training function for the assignment:
-             * The abstract methods implemented here are for the purpose
-             *   of the analysis for the given points and weights.
-             *   Small differences :
-             *   the analysis is restarted after each error
-             *   for this performance integers have been used for classifier and target
-             *   order and application of the evaluation - correction process
+             *  Training function for the assignment:
+             *  All the abstract methods are implemented here and for the purpose
+             *    of the analysis for the given points and weights.
+             *  Small differences from the Core constructor :
+             *  Without Graphical Interface
+             *  The analysis is restarted after each error
+             *  For this performance integers have been used for classifier and target
+             *  Order and application of the evaluation - correction process
              */
             @Override
             public void train(int [] values , int target)
