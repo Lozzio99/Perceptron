@@ -49,7 +49,7 @@ public class pract2
         System.out.println("time needed :");
         double end =System.nanoTime()-START;
         long convert = MILLISECONDS.convert((long) end, NANOSECONDS);
-        System.out.println(new StringBuilder().append("Time needed >").append(convert).append(" ms").toString());
+        System.out.println(String.format("Time needed > %s  ms", convert));
 
 
     }
@@ -123,7 +123,7 @@ public class pract2
                         }
                     }
                 }
-                perceptron.sum_Errors += Math.abs(error);
+                perceptron.sum_Errors += Math.abs(error);     //instance field of the perceptron
             }
             public int activation(double i)    //activation function with t = 0
             {

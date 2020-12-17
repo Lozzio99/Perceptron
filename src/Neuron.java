@@ -6,8 +6,8 @@ import java.util.Random;
 abstract class Neuron {
     //create an abstract Class Neuron that represents the process of the Hebbian learning rule
     public double sum_Errors;
-    public double [] weights ;
-    public double [] w;
+    public double [] weights ;   //field for random weights
+    public double [] w;          //field for established weights
     private final double learningK =0.001; //constant that determines how fast the neuron can learn, bigger is faster but less precise
 
     public Neuron ()
@@ -33,18 +33,17 @@ abstract class Neuron {
         //wx starts as a random number between -1 and 1
         //wy starts as a random number between -1 and 1
         //wb starts as a random number between -1 and 1
-        //learning constant is 0.01
     }
 
     public void train(double [] inputs , double target)
-    { //training function for the GUI
+    { //training function for the GUI implementation
 
         sum_Errors = 0;
-        double error = target - eval(inputs); //the error is the correct answer - gues
+        double error = target - activation(inputs);     //the error is the correct answer - the result from the activation
         this.sum_Errors += Math.abs(error);
         for (int i = 0;i<weights.length; i++ )                  //wx is now wx + error * x * c
         {                                                       //wy is now wy + error * y * c
-            double deltaWeight = error * inputs[i] * learningK;  //wb is now wb + error * c
+            double deltaWeight = error * inputs[i] * learningK; //wb is now wb + error * b * c
             weights[i] = weights[i] + deltaWeight;
         }
     }
@@ -58,7 +57,7 @@ abstract class Neuron {
         double w0 = this.weights[0];
         double w1 = this.weights[1];
         double wb = this.weights[2];
-        return  -(wb/w1) -(w0/w1)* value;    //return the formula for the y after the slope and the rise evaluation
+        return  -(wb/w1) -(w0/w1)* value;    //return the formula for the y after the angle evaluation
     }
     public double sign(double i)
     {
@@ -77,17 +76,17 @@ abstract class Neuron {
         return this.sum_Errors;
     }
 
-    public double eval (double [] inputs)
+    public double activation(double [] inputs)
     {
         //produces the output from two inputs plus the bias node
-        double guess = 0;
+        double activat_sum = 0;
         for (int i = 0; i< this.weights.length; i++)
         {
-            guess += this.weights[i]*inputs[i];
-            //guess is the sum of the inputs times their weights, plus the bias(times 1 or -1)
+            activat_sum += this.weights[i]*inputs[i];
+            //activat_sum is the sum of the inputs times their weights, plus the bias(times 1 or -1)
         }
-        //the output is the sign of guess
-        return sign(guess);
+        //the output is the sign of that sum
+        return sign(activat_sum);
     }
 
     public abstract void train(int[] inputs, int target);

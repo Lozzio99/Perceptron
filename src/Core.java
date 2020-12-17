@@ -19,7 +19,6 @@ public class Core extends JFrame
     private  Dot [] points; // Create an ArrayList to store the points that will be drawn
     private static JFrame frame;
     private static double START;
-    private  Random r;
     private static final int WIDTH = 700;
     private static final int HEIGHT = 700;
     private  double sum_Errors = 0 ;
@@ -31,7 +30,7 @@ public class Core extends JFrame
         perceptronLearningFromRandom();
         double end = System.nanoTime()-START;
         double convert = SECONDS.convert((long) end, NANOSECONDS);
-        System.out.println(new StringBuilder().append("Time needed >").append(convert).append(" s.").toString());
+        System.out.println(String.format("Time needed > %s  ms", convert));
     }
     public static void perceptronLearningFromRandom()
     {
@@ -69,7 +68,7 @@ public class Core extends JFrame
     public Core ()
     {
         setup();
-        r = new Random(System.currentTimeMillis());
+        new Random(System.currentTimeMillis());
         perceptron = new Neuron(3) {
             //method for the assignment
             @Override
@@ -97,7 +96,7 @@ public class Core extends JFrame
 
                 // train the Neuron with these values
                 // classifier is the third parameter in the point object(the correct answer is assigned here)
-                p.setAssignedClassified(perceptron.eval(p.getInput()));
+                p.setAssignedClassified(perceptron.activation(p.getInput()));
                 frame.add(p);
                 frame.pack();
                 sum_Errors += perceptron.getSum();
@@ -122,15 +121,15 @@ public class Core extends JFrame
         // adding too much data values in this array could lead to a late response from the graphics, but still possible
         for(int i = 0; i<dataset.length ; i++) {
             //create a new Point
-            //x is a random number between 0 and the width of the screen
-            //y is a random number between 0 and the height of the screen
+            //x is a random number between 0 and 1
+            //y is a random number between 0 and 1
             double classifier = 1;      //set the correct answer to be 1
-            double x = (r = new Random()).nextDouble();
-            if ((r = new Random()).nextDouble() < 0.5) {
+            double x = new Random().nextDouble();
+            if (new Random().nextDouble() < 0.5) {
                 x *= -1;                //randomise if positive or negative as well
             }
-            double y = (r = new Random()).nextDouble();
-            if ((r = new Random()).nextDouble() < 0.5) {
+            double y = new Random().nextDouble();
+            if (new Random().nextDouble() < 0.5) {
                 y *= -1;
             }
             if (f(x) < y) {              // if the point is below the line
@@ -171,11 +170,11 @@ public class Core extends JFrame
         }
         public double setX(double x1)
         {
-            return value.map(x1,-1,1,0,700);
+            return value.map(x1,0,700);
         }
         public double setY (double y1)
         {
-            return value.map(y1,-1,1,700,0);
+            return value.map(y1,700,0);
         }
 
         public double getClassifier() { return this.classifier;   }
