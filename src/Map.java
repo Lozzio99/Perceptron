@@ -1,3 +1,4 @@
+package Perceptron.src;
 
 public class Map {
     double point;

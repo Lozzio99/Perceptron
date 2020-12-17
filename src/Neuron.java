@@ -1,3 +1,5 @@
+package Perceptron.src;
+
 import java.util.Random;
 
 abstract class Neuron {
