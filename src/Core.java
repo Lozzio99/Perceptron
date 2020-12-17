@@ -90,10 +90,6 @@ public class Core extends JFrame
             {
                 //For each dataset in test
                 perceptron.train(p.getInput(), p.getClassifier());
-                //  if the graphics causes some delay or doesn't respond efficiently uncomment the next line
-                //  Thread.onSpinWait();
-
-
                 // train the Neuron with these values
                 // classifier is the third parameter in the point object(the correct answer is assigned here)
                 p.setAssignedClassified(perceptron.activation(p.getInput()));
@@ -104,11 +100,11 @@ public class Core extends JFrame
 
             }
             test.add(points);
-            System.out.println(sum_Errors);
+            System.out.println("Errors : "+(int)(sum_Errors/2) + " weigths " + Arrays.toString(perceptron.get_weights()));
             if (sum_Errors ==0)
             {
                 frame.setVisible(true);
-                System.out.println("process finished with weights"+ Arrays.toString(perceptron.weights));
+                System.out.println("process finished with weights"+ Arrays.toString(perceptron.get_weights()));
                 break;
             }
         }
@@ -214,8 +210,6 @@ public class Core extends JFrame
                 g2.setColor (Color.black);
                 g2.draw(b);
             }
-
-
         }
     }
 }

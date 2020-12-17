@@ -47,6 +47,7 @@ abstract class Neuron {
             weights[i] = weights[i] + deltaWeight;
         }
     }
+    public double [] get_weights(){ return this.weights;}
     public double [] getWeights()
     {
         return this.w;
