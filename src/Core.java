@@ -1,7 +1,8 @@
 package Perceptron.src;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -24,6 +25,8 @@ public class Core extends JFrame
     public static final int WIDTH = 700;
     public static final int HEIGHT = 700;
     public  double sum_Errors = 0 ;
+    private static WindowEvent listen;
+    private static WindowAdapter closed;
 
     public static void main(String[] args)
     {
@@ -36,13 +39,13 @@ public class Core extends JFrame
     }
     public static void perceptronLearningFromRandom()
     {
-      /**
-      * Running the perceptron with the graphics and (expected) mapping on the frame
-      * Random weights
-      * Random points
-      * lk = 0.001;
-      *
-      */
+        /**
+         * Running the perceptron with the graphics and (expected) mapping on the frame
+         * Random weights
+         * Random points
+         * lk = 0.001;
+         *
+         */
         new Core();
     }
     public static void setup()
@@ -51,17 +54,34 @@ public class Core extends JFrame
         frame.setSize(WIDTH, HEIGHT);//700
         frame.setMinimumSize(new Dimension(WIDTH,HEIGHT));
         frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //this window listener should give a stable access to the window closing tool,
+        // given the program the time to escape the current method
+        closed = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                listen = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
+                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(listen);
+                System.out.println("System closed by user");
+                System.exit(0);
+            }
+        };
+        frame.addWindowListener(closed);
+        frame.pack();
+
     }
+
     public Core ()
     {
         setup();
         r = new Random(System.currentTimeMillis());
         perceptron = new Neuron(3) {
+            //method for the assignment
             @Override
             public void train(int[] inputs, int target) {  }
         }; //Initialise the Neuron with random weights
+
         learnFromRandom();
     }
     public void learnFromRandom()
@@ -70,9 +90,9 @@ public class Core extends JFrame
         ArrayList<Dot[]> test= new ArrayList<>();
         while(test.size()<2000)
         {
-
             points = generate_random_test();
             sum_Errors = 0;
+            frame.repaint(); //call to update the graphics
             for (Dot p : points)
             {
                 //For each dataset in test
@@ -81,9 +101,11 @@ public class Core extends JFrame
                 //train the Neuron with these values
                 //classifier is the third parameter in the point object(the correct answer is assigned here)
                 p.setAssignedClassified(perceptron.eval(p.getInput()));
+                frame.pack();
                 frame.add(p);
                 sum_Errors += perceptron.getSum();
                 frame.setVisible(true);
+
             }
             test.add(points);
             System.out.println(sum_Errors);
@@ -99,7 +121,8 @@ public class Core extends JFrame
     public Dot[] generate_random_test()
     {
         //function that generates random dataset of dataset values
-        Dot [] dataset = new Dot [100]; //Create a new ArrayList called dataset
+        Dot [] dataset = new Dot [200]; //Create a new ArrayList called dataset
+        // adding too much data values in this array could lead to a late response from the graphics, but still possible
         for(int i = 0; i<dataset.length ; i++) {
             //create a new Point
             //x is a random number between 0 and the width of the screen
@@ -123,7 +146,7 @@ public class Core extends JFrame
     }
     double f(double x)
     { //The function that defines the line
-        return 0.3*x+0.11; //A given line
+        return -0.3*x+0.11; //A given line
     }
 
     class Dot extends JComponent
@@ -173,14 +196,14 @@ public class Core extends JFrame
             Point2D.Double a = new Point2D.Double(setX(-1), setY(f(-1)));
             Point2D.Double a1 = new Point2D.Double(setX(1),setY(f(1)));
             Line2D.Double line = new Line2D.Double(a ,a1);
-            double guessy1 = perceptron.guessLineY(-1);
-            double guessy2 = perceptron.guessLineY(1);
-            Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessy1),setX(1),setY(guessy2));
+            double guessYLine = perceptron.guessLineY(-1);
+            double guessYLine2 = perceptron.guessLineY(1);
+            Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessYLine),setX(1),setY(guessYLine2));
             g2.draw(guessLine);
             g2.draw(line);
-            double linex = setX(this.x);
-            double liney = setY(this.y);
-            b = new Ellipse2D.Double(linex,liney, 10, 10);
+            double lineX = setX(this.x);
+            double lineY = setY(this.y);
+            b = new Ellipse2D.Double(lineX,lineY, 10, 10);
             if (this.getClassifier() == 1)    //distinct colours for different classifiers
             {
                 g2.setColor(Color.red);

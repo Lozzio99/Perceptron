@@ -1,9 +1,10 @@
 package Perceptron.src;
 
+
 import java.util.Random;
 
 abstract class Neuron {
-    //create a new Class called Neuron
+    //create an abstract Class Neuron that represents the process of the Hebbian learning rule
     public double sum_Errors;
     public double [] weights ;
     public double [] w;
@@ -36,7 +37,7 @@ abstract class Neuron {
     }
 
     public void train(double [] inputs , double target)
-    { //training function
+    { //training function for the GUI
 
         sum_Errors = 0;
         double error = target - eval(inputs); //the error is the correct answer - gues
