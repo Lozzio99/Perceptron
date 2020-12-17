@@ -3,39 +3,35 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static java.util.concurrent.TimeUnit.*;
+
 /**
  * Class to implement the perceptron based on randomised weight and points
  * output is a line on the frame giving the best fit of the function
  */
 public class Core extends JFrame
 {
-    public static Neuron perceptron ; //create a new Neuron object
-    public  Dot [] points; // Create an ArrayList to store the points that will be drawn
-    public static JFrame frame;
-    public static double START;
-    public  Random r;
-    public static final int WIDTH = 700;
-    public static final int HEIGHT = 700;
-    public  double sum_Errors = 0 ;
+    private static Neuron perceptron ; //create a new Neuron object
+    private  Dot [] points; // Create an ArrayList to store the points that will be drawn
+    private static JFrame frame;
+    private static double START;
+    private  Random r;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 700;
+    private  double sum_Errors = 0 ;
     private static WindowEvent listen;
-    private static WindowAdapter closed;
 
     public static void main(String[] args)
     {
         START = System.nanoTime();
         perceptronLearningFromRandom();
-        System.out.println("time needed :");
         double end = System.nanoTime()-START;
-        double convert = MILLISECONDS.convert((long) end, NANOSECONDS);
-        System.out.println(new StringBuilder().append(convert).append(" ms").toString());
+        double convert = SECONDS.convert((long) end, NANOSECONDS);
+        System.out.println(new StringBuilder().append("Time needed >").append(convert).append(" s.").toString());
     }
     public static void perceptronLearningFromRandom()
     {
@@ -58,11 +54,10 @@ public class Core extends JFrame
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         //this window listener should give a stable access to the window closing tool,
         // given the program the time to escape the current method
-        closed = new WindowAdapter() {
-            @Override
+        WindowAdapter closed = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                listen = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
-                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(listen);
+                Core.listen = new WindowEvent(Core.frame, 201);
+                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(Core.listen);
                 System.out.println("System closed by user");
                 System.exit(0);
             }
@@ -71,7 +66,6 @@ public class Core extends JFrame
         frame.pack();
 
     }
-
     public Core ()
     {
         setup();
@@ -97,12 +91,15 @@ public class Core extends JFrame
             {
                 //For each dataset in test
                 perceptron.train(p.getInput(), p.getClassifier());
-                Thread.onSpinWait();
-                //train the Neuron with these values
-                //classifier is the third parameter in the point object(the correct answer is assigned here)
+                //  if the graphics causes some delay or doesn't respond efficiently uncomment the next line
+                //  Thread.onSpinWait();
+
+
+                // train the Neuron with these values
+                // classifier is the third parameter in the point object(the correct answer is assigned here)
                 p.setAssignedClassified(perceptron.eval(p.getInput()));
-                frame.pack();
                 frame.add(p);
+                frame.pack();
                 sum_Errors += perceptron.getSum();
                 frame.setVisible(true);
 
@@ -218,6 +215,7 @@ public class Core extends JFrame
                 g2.setColor (Color.black);
                 g2.draw(b);
             }
+
 
         }
     }

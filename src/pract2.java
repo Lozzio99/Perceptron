@@ -1,5 +1,4 @@
 package Perceptron.src;
-
 import java.util.Arrays;
 import static java.util.concurrent.TimeUnit.*;
 /**
@@ -9,13 +8,13 @@ import static java.util.concurrent.TimeUnit.*;
  */
 public class pract2
 {
-    public static Neuron perceptron;
-    public int [] input;
-    public int id;
-    public int target;
-    public static final double lk =  0.1;  // the learning constant for the assignment
-    public static double START;
-    public static pract2 [] test;
+    private static Neuron perceptron;
+    private final int [] input;
+    private final int id;
+    private final int target;
+    private static final double lk =  0.1;  // the learning constant for the assignment
+    private static double START;
+    private static pract2 [] test;
     public pract2(int []x, int t, int n)
     {
         this.input = x;

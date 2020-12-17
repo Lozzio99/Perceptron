@@ -8,7 +8,7 @@ abstract class Neuron {
     public double sum_Errors;
     public double [] weights ;
     public double [] w;
-    public final double learningK =0.001; //constant that determines how fast the neuron can learn, bigger is faster but less precise
+    private final double learningK =0.001; //constant that determines how fast the neuron can learn, bigger is faster but less precise
 
     public Neuron ()
     {
