@@ -1,4 +1,6 @@
 package Perceptron.src;
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -30,7 +32,7 @@ public class Core extends JFrame
         perceptronLearningFromRandom();
         double end = System.nanoTime()-START;
         double convert = SECONDS.convert((long) end, NANOSECONDS);
-        System.out.println(String.format("Time needed > %s  ms", convert));
+        System.out.println(String.format("Time needed > %s  s", convert));
     }
     public static void perceptronLearningFromRandom()
     {
@@ -77,6 +79,7 @@ public class Core extends JFrame
 
         learnFromRandom();
     }
+
     public void learnFromRandom()
     {
         //Fill the tests ArrayList with randomly spawned data values
@@ -138,7 +141,7 @@ public class Core extends JFrame
     }
     double f(double x)
     { //The function that defines the line
-        return -0.3*x+0.11; //A given line
+        return 2*x+1; //A given line
     }
 
     class Dot extends JComponent
