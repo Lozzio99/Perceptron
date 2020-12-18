@@ -49,6 +49,10 @@ cmake-build-*/
 
 # IntelliJ
 out/
+Perceptron.iml
+_config.yml
+*Perceptron.iml
+*_config.yml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
