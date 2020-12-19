@@ -180,6 +180,6 @@ public class DoubleCore
     //The function that defines the line
     public static double f(double x) { return 2*x+1; }
     public static double g(double x ){return -0.3*x+0.26;}
-    public static Neuron passNeuron ( ){return perceptron;}
-    public static Neuron passNeuron2 ( ){return perceptron2;}
+    public static Neuron passNeuron(){return perceptron;}
+    public static Neuron passNeuron2(){return perceptron2;}
 }
