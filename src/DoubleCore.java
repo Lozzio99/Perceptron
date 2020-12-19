@@ -16,11 +16,11 @@ public class DoubleCore
     private static Neuron perceptron ; //create a new Neuron object
     private static Neuron perceptron2 ; //create a new Neuron object
     private Point[] points; // Create an ArrayList to store the points that will be drawn
-    private static JFrame frame;
+    public static JFrame frame;
     private static double START;
     private static final int WIDTH = 700;
     private static final int HEIGHT = 700;
-    private  double sum_Errors = 0 ;
+    private double sum_Errors = 0 ;
     private double sum_Errors2 = 0;
     private static WindowEvent listen;
     private boolean one = false;
@@ -85,14 +85,18 @@ public class DoubleCore
         ArrayList<Point[]> test= new ArrayList<>();
         double [] weights1 = new double[3];
         double [] weights2 = new double [3];
+        //points = generate_random_test();
         while(test.size()<2000)
         {
-            points = generate_random_test();
             sum_Errors = 0;
             sum_Errors2= 0;
             frame.repaint();
+            points = generate_random_test();
             for (Point p : points)
             {
+                p.setValue1(perceptron);
+                p.setValue2(perceptron2);
+                frame.repaint();
                 //For each dataset in test
                 if (!one)
                 {
@@ -102,34 +106,32 @@ public class DoubleCore
                 }
                 if (!two)
                 {
-                    perceptron2.train(p.getInput(),p.getClassifier2());
+                    perceptron2.train(p.getInput(), p.getClassifier2());
                     p.setAssignedClassified2(perceptron2.activation(p.getInput()));
                     sum_Errors2 += perceptron2.sum_Errors;
                 }
                 // train the Neuron with these values
                 // classifier is the third parameter in the point object(the correct answer is assigned here)
-                frame.add(p);
                 frame.pack();
+                frame.add(p);
                 frame.setVisible(true);
             }
             test.add(points);
             if (!one)
-            System.out.println("Errors > 1  -> [  "+(int)(sum_Errors/2)+" ]");
+                System.out.println("Errors > 1  -> [  "+(int)(sum_Errors/2)+" ]");
             if (!two)
-            System.out.println("Errors > 2  -> [  "+(int)(sum_Errors2/2)+" ]");
-            if (sum_Errors == 0)
+                System.out.println("Errors > 2  -> [  "+(int)(sum_Errors2/2)+" ]");
+            if (sum_Errors == 0 && !one)
             {
                 one = true;
                 if (perceptron != null)
                 weights1 = perceptron.get_weights();
-                perceptron = null;
             }
-            if (sum_Errors2 == 0)
+            if (sum_Errors2 == 0 && !two)
             {
                 two = true;
                 if ( perceptron2 != null)
                 weights2 = perceptron2.get_weights();
-                perceptron2 = null;
             }
             if (one && two)
             {
@@ -180,6 +182,4 @@ public class DoubleCore
     //The function that defines the line
     public static double f(double x) { return 2*x+1; }
     public static double g(double x ){return -0.3*x+0.26;}
-    public static Neuron passNeuron(){return perceptron;}
-    public static Neuron passNeuron2(){return perceptron2;}
 }

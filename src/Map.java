@@ -22,26 +22,28 @@ public class Map {
         double newval = Math.abs((float)n);
         if (stop1<stop2)     // Mapping from a 4 quadrants plane to the java plane //0,0 mapped on the center
         {
-            newval*=350;
+            double d = stop2/2.0;
+            newval*=d;
             if (n>0)
             {
-                return (350+newval);
+                return (d+newval);
             }
             else
             {
-                return 350-newval;
+                return d-newval;
             }
         }
         if (stop1>stop2)
         {
-            newval*=350;
+            double d = stop1/2.0;
+            newval*=d;
             if (n>0)
             {
-                return (350-newval);
+                return (d-newval);
             }
             else
             {
-                return 350+newval;
+                return d+newval;
             }
         }
         return newval;
