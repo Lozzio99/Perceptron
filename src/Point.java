@@ -48,6 +48,7 @@ public class Point  extends JComponent{
     public double getClassifier() { return this.classifier;   }
     public double getClassifier2(){return this.classifier2 ;   }
     public double getClassified(){return this.classified;}
+    public double getClassified2(){return this.classified2;}
     public void setAssignedClassified(double given) {this.classified = given;   }
     public void setAssignedClassified2(double given){this.classified2 = given;}
     public double [] getInput () { return this.inputs;   }
@@ -87,15 +88,20 @@ public class Point  extends JComponent{
         }
         if (this.getClassifier() == -1 && this.getClassifier2() == 1)
         {
-            g2.setColor(Color.green);
+            g2.setColor(Color.orange);
         }
         if (this.getClassifier2()== -1&& this.getClassifier()== -1){
             g2.setColor(Color.blue);
         }
         if (this.getClassifier()== 1&& this.getClassifier2()== -1){
-            g2.setColor(Color.orange);
+            g2.setColor(Color.GREEN);
         }
         g2.fill(b);
+        if (this.getClassifier2()==this.getClassified2()&&this.getClassifier()==this.getClassified())
+        {
+            g2.setColor(Color.black);
+            g2.draw(b);
+        }
     }
 
     private double f(double x) { return DoubleCore.f(x) ; }
