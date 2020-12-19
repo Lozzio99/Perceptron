@@ -10,8 +10,8 @@ import java.awt.geom.Point2D;
 
 public class Point  extends JComponent{
 
-    private static Neuron perceptron= DoubleCore.passNeuron();
-    private static Neuron perceptron2= DoubleCore.passNeuron2();
+    private Neuron perceptron= DoubleCore.passNeuron();
+    private Neuron perceptron2= DoubleCore.passNeuron2();
     private double[] inputs; //create an array of input for the point, to show points on the screen
     private double x; //the x coordinate
     private double y; //the y coordinate
@@ -67,7 +67,6 @@ public class Point  extends JComponent{
         double guessYLine = perceptron.guessLineY(-1);
         double guessYLine2 = perceptron.guessLineY(1);
         Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessYLine),setX(1),setY(guessYLine2));
-
 
         Point2D.Double A = new Point2D.Double(setX(-1), setY(g(-1)));
         Point2D.Double A2 = new Point2D.Double(setX(1),setY(g(1)));

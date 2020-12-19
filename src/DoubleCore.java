@@ -50,6 +50,7 @@ public class DoubleCore
         frame = new JFrame();
         frame.setSize(WIDTH, HEIGHT);//700
         frame.setMinimumSize(new Dimension(WIDTH,HEIGHT));
+        frame.getContentPane();
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -89,8 +90,7 @@ public class DoubleCore
             points = generate_random_test();
             sum_Errors = 0;
             sum_Errors2= 0;
-            frame.repaint(); //call to update the graphics
-
+            frame.repaint(10);
             for (Point p : points)
             {
                 //For each dataset in test
@@ -145,7 +145,7 @@ public class DoubleCore
     public Point [] generate_random_test()
     {
         //function that generates random dataset of dataset values
-        Point[] dataset = new Point [200]; //Create a new ArrayList called dataset
+        Point[] dataset = new Point [500]; //Create a new ArrayList called dataset
         // adding too much data values in this array could lead to a late response from the graphics, but still possible
         for(int i = 0; i<dataset.length ; i++)
         {
@@ -179,7 +179,7 @@ public class DoubleCore
     }
     //The function that defines the line
     public static double f(double x) { return 2*x+1; }
-    public static double g(double x ){return -2*x-1;}
+    public static double g(double x ){return -0.3*x+0.26;}
     public static Neuron passNeuron ( ){return perceptron;}
     public static Neuron passNeuron2 ( ){return perceptron2;}
 }
