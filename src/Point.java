@@ -10,8 +10,8 @@ import java.awt.geom.Point2D;
 
 public class Point  extends JComponent{
 
-    private Neuron perceptron= DoubleCore.passNeuron();
-    private Neuron perceptron2= DoubleCore.passNeuron2();
+    private Neuron perceptron;
+    private Neuron perceptron2;
     private double[] inputs; //create an array of input for the point, to show points on the screen
     private double x; //the x coordinate
     private double y; //the y coordinate
@@ -19,8 +19,8 @@ public class Point  extends JComponent{
     private double classifier2; //here the second classifier
     private double classified; //the classifier given by the perceptron
     private double classified2; //the classifier given by the perceptron
-    private int iteration;
     private Map value;
+    private int iteration;
 
     public Point(double x_, double y_, double o_, double p_)
     {
@@ -39,11 +39,13 @@ public class Point  extends JComponent{
 
     public double setX(double x1)
     {
-        return value.map(x1,0,700);
+        double d = DoubleCore.frame.getWidth()-18;
+        return value.map(x1,0,d);
     }
-    public double setY (double y1)
+    public double setY(double x1)
     {
-        return value.map(y1,700,0);
+        double d = DoubleCore.frame.getHeight()-18;
+        return value.map(x1,d,0);
     }
     public double getClassifier() { return this.classifier;   }
     public double getClassifier2(){return this.classifier2 ;   }
@@ -52,7 +54,40 @@ public class Point  extends JComponent{
     public void setAssignedClassified(double given) {this.classified = given;   }
     public void setAssignedClassified2(double given){this.classified2 = given;}
     public double [] getInput () { return this.inputs;   }
-
+    public void setValue1 (Neuron n1)
+    {
+        this.perceptron = n1;
+    }
+    public void setValue2 (Neuron n2)
+    {
+        this.perceptron2 = n2;
+    }
+    public Line2D.Double guess1()
+    {
+        double guessYLine = this.perceptron.guessLineY(-1);
+        double guessYLine2 = this.perceptron.guessLineY(1);
+        Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessYLine),setX(1),setY(guessYLine2));
+        return guessLine;
+    }
+    public Line2D.Double guess2()
+    {
+        double guessYLineTwo = perceptron2.guessLineY(-1);
+        double guessYLineTwo2 = perceptron2.guessLineY(1);
+        Line2D.Double guessLine2 = new Line2D.Double(setX(-1),setY(guessYLineTwo),setX(1),setY(guessYLineTwo2));
+        return guessLine2;
+    }
+    public Line2D.Double line1 (){
+        Point2D.Double a = new Point2D.Double(setX(-1), setY(f(-1)));
+        Point2D.Double a1 = new Point2D.Double(setX(1),setY(f(1)));
+        Line2D.Double line = new Line2D.Double(a ,a1);
+        return line;
+    }
+    public Line2D.Double line2 (){
+        Point2D.Double A = new Point2D.Double(setX(-1), setY(g(-1)));
+        Point2D.Double A2 = new Point2D.Double(setX(1),setY(g(1)));
+        Line2D.Double line2 = new Line2D.Double(A ,A2);
+        return line2;
+    }
 
     public void paintComponent(Graphics g)
     {
@@ -60,30 +95,16 @@ public class Point  extends JComponent{
         Graphics2D g2 =(Graphics2D)  g;
         Ellipse2D.Double b ;
         g2.setStroke(new BasicStroke(2.0f));
-
-        Point2D.Double a = new Point2D.Double(setX(-1), setY(f(-1)));
-        Point2D.Double a1 = new Point2D.Double(setX(1),setY(f(1)));
-        Line2D.Double line = new Line2D.Double(a ,a1);
-        double guessYLine = perceptron.guessLineY(-1);
-        double guessYLine2 = perceptron.guessLineY(1);
-        Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessYLine),setX(1),setY(guessYLine2));
-
-        Point2D.Double A = new Point2D.Double(setX(-1), setY(g(-1)));
-        Point2D.Double A2 = new Point2D.Double(setX(1),setY(g(1)));
-        Line2D.Double line2 = new Line2D.Double(A ,A2);
-        double guessYLineTwo = perceptron2.guessLineY(-1);
-        double guessYLineTwo2 = perceptron2.guessLineY(1);
-        Line2D.Double guessLineTwo2 = new Line2D.Double(setX(-1),setY(guessYLineTwo),setX(1),setY(guessYLineTwo2));
         g2.setColor(Color.black);
-        g2.draw(line);
-        g2.draw(line2);
-        g2.draw(guessLine);
-        g2.draw(guessLineTwo2);
+        g2.draw(line1());
+        g2.draw(line2());
+        g2.draw(guess1());
+        g2.draw(guess2());
 
 
-        double lineX = setX(this.x);
-        double lineY = setY(this.y);
-        b = new Ellipse2D.Double(lineX,lineY, 10, 10);
+        double frameX = setX(this.x);
+        double frameY = setY(this.y);
+        b = new Ellipse2D.Double(frameX,frameY, 12, 12);
         if (this.getClassifier() == 1 && this.getClassifier2()== 1 )    //distinct colours for different classifiers
         {
             g2.setColor(Color.red);
