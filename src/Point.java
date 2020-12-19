@@ -67,8 +67,7 @@ public class Point  extends JComponent{
         double guessYLine = perceptron.guessLineY(-1);
         double guessYLine2 = perceptron.guessLineY(1);
         Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessYLine),setX(1),setY(guessYLine2));
-        g2.draw(guessLine);
-        g2.draw(line);
+
 
         Point2D.Double A = new Point2D.Double(setX(-1), setY(g(-1)));
         Point2D.Double A2 = new Point2D.Double(setX(1),setY(g(1)));
@@ -76,8 +75,12 @@ public class Point  extends JComponent{
         double guessYLineTwo = perceptron2.guessLineY(-1);
         double guessYLineTwo2 = perceptron2.guessLineY(1);
         Line2D.Double guessLineTwo2 = new Line2D.Double(setX(-1),setY(guessYLineTwo),setX(1),setY(guessYLineTwo2));
-        g2.draw(guessLineTwo2);
+        g2.setColor(Color.black);
+        g2.draw(line);
         g2.draw(line2);
+        g2.draw(guessLine);
+        g2.draw(guessLineTwo2);
+
 
         double lineX = setX(this.x);
         double lineY = setY(this.y);
@@ -88,10 +91,10 @@ public class Point  extends JComponent{
         }
         if (this.getClassifier() == -1 && this.getClassifier2() == 1)
         {
-            g2.setColor(Color.orange);
+            g2.setColor(Color.green);
         }
         if (this.getClassifier2()== -1&& this.getClassifier()== -1){
-            g2.setColor(Color.blue);
+            g2.setColor(Color.red);
         }
         if (this.getClassifier()== 1&& this.getClassifier2()== -1){
             g2.setColor(Color.GREEN);
@@ -103,7 +106,6 @@ public class Point  extends JComponent{
             g2.draw(b);
         }
     }
-
     private double f(double x) { return DoubleCore.f(x) ; }
     private double g (double x ){return DoubleCore.g(x);}
 }
