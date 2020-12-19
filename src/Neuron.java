@@ -4,7 +4,7 @@ import java.util.Random;
 abstract class Neuron {
     //create an abstract Class Neuron that represents the process of the Hebbian learning rule
     public double sum_Errors;
-    public double [] weights ;   //field for random weights
+    private double [] weights ;   //field for random weights
     public double [] w;          //field for established weights
     private static final double learningK =0.005; //constant that determines how fast the neuron can learn, bigger is faster but less precise
     public Neuron ()
