@@ -1,6 +1,4 @@
 package Perceptron.src;
-
-
 import java.util.Random;
 
 abstract class Neuron {
@@ -8,8 +6,7 @@ abstract class Neuron {
     public double sum_Errors;
     public double [] weights ;   //field for random weights
     public double [] w;          //field for established weights
-    private final double learningK =0.001; //constant that determines how fast the neuron can learn, bigger is faster but less precise
-
+    private static final double learningK =0.005; //constant that determines how fast the neuron can learn, bigger is faster but less precise
     public Neuron ()
     {
         //initialisation function for the neuron with given weights
@@ -19,7 +16,7 @@ abstract class Neuron {
     public Neuron(int numOfInputs)
     {
         //initialisation function for the neuron with random weights
-        sum_Errors = 0;
+        this.sum_Errors = 0;
         weights = new double[numOfInputs];
         Random r = new Random(System.currentTimeMillis());
         for (int i = 0; i<weights.length; i++)
@@ -38,11 +35,12 @@ abstract class Neuron {
     public void train(double [] inputs , double target)
     { //training function for the GUI implementation
 
-        sum_Errors = 0;
+        this.sum_Errors = 0;
         double error = target - activation(inputs);     //the error is the correct answer - the result from the activation
         this.sum_Errors += Math.abs(error);
         for (int i = 0;i<weights.length; i++ )                  //wx is now wx + error * x * c
-        {                                                       //wy is now wy + error * y * c
+        {
+                                                                //wy is now wy + error * y * c
             double deltaWeight = error * inputs[i] * learningK; //wb is now wb + error * b * c
             weights[i] = weights[i] + deltaWeight;
         }
@@ -72,6 +70,12 @@ abstract class Neuron {
             return -1;
         }
     }
+    public static Neuron passNeuron (int w){return new Neuron(w) {
+        @Override
+        public void train(int[] inputs, int target) {
+
+        }
+    };}
     public double getSum()
     {
         return this.sum_Errors;

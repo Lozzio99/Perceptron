@@ -54,6 +54,9 @@ _config.yml
 *Perceptron.iml
 *_config.yml
 out/
+*.idea/
+*Perceptron.iml
+*_config.yml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
