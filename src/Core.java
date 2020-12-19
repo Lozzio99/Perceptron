@@ -1,13 +1,10 @@
 package Perceptron.src;
-import org.w3c.dom.ls.LSOutput;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 import static java.util.concurrent.TimeUnit.*;
 
 /**
