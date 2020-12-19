@@ -90,7 +90,7 @@ public class DoubleCore
             points = generate_random_test();
             sum_Errors = 0;
             sum_Errors2= 0;
-            frame.repaint(10);
+            frame.repaint();
             for (Point p : points)
             {
                 //For each dataset in test
