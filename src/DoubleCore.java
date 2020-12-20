@@ -7,7 +7,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -86,34 +85,13 @@ public class DoubleCore
         double [] weights1 = new double[3];
         double [] weights2 = new double [3];
         //points = generate_random_test();
+        points = generate_random_test();
         while(test.size()<2000)
         {
             this.sum_Errors = 0;
             this.sum_Errors2= 0;
             frame.repaint();
-            points = generate_random_test();
-            for (Point p : points)
-            {
-                frame.repaint();
-                //For each dataset in test
-                if (!one)
-                {
-                    perceptron.train(p.getInput(), p.getClassifier());
-                    p.setAssignedClassified(perceptron.activation(p.getInput()));
-                    this.sum_Errors += perceptron.getSum();
-                }
-                if (!two)
-                {
-                    perceptron2.train(p.getInput(), p.getClassifier2());
-                    p.setAssignedClassified2(perceptron2.activation(p.getInput()));
-                    this.sum_Errors2 += perceptron2.sum_Errors;
-                }
-                // train the Neuron with these values
-                // classifier is the third parameter in the point object(the correct answer is assigned here)
-                frame.pack();
-                frame.add(p);
-                frame.setVisible(true);
-            }
+            evaluate(points);
             test.add(points);
             if (!one)
                 System.out.println("Errors > 1  -> [  "+(int)(sum_Errors/2)+" ]");
@@ -122,13 +100,11 @@ public class DoubleCore
             if (this.sum_Errors == 0 && !one)
             {
                 one = true;
-                if (perceptron != null)
                 weights1 = perceptron.get_weights();
             }
             if (this.sum_Errors2 == 0 && !two)
             {
                 two = true;
-                if ( perceptron2 != null)
                 weights2 = perceptron2.get_weights();
             }
             if (one && two)
@@ -141,6 +117,35 @@ public class DoubleCore
             }
         }
         //System.exit(0);
+    }
+    public void evaluate (Point [] points)
+    {
+        for (Point p : points)
+        {
+            //For each dataset in test
+            if (!one)
+            {
+                this.perceptron.train(p.getInput(), p.getClassifier());
+                p.setAssignedClassified(this.perceptron.activation(p.getInput()));
+                this.sum_Errors += this.perceptron.getSum();
+            }
+            if (!two)
+            {
+                this.perceptron2.train(p.getInput(), p.getClassifier2());
+                p.setAssignedClassified2(this.perceptron2.activation(p.getInput()));
+                this.sum_Errors2 += this.perceptron2.getSum();
+            }
+            // train the Neuron with these values
+            // classifier is the third parameter in the point object(the correct answer is assigned here)
+            if (p.getClassifier()== p.getClassified()&& p.getClassifier2()== p.getClassified2())
+                p.wasMissed(false);
+            else
+                p.wasMissed(true);
+            frame.pack();
+            frame.repaint();
+            frame.add(p);
+            frame.setVisible(true);
+        }
     }
     public Point [] generate_random_test()
     {

@@ -10,8 +10,8 @@ import java.awt.geom.Point2D;
 
 public class Point  extends JComponent{
 
-    private static Neuron perceptron;
-    private static Neuron perceptron2;
+    private Neuron perceptron;
+    private Neuron perceptron2;
     private double[] inputs; //create an array of input for the point, to show points on the screen
     private double x; //the x coordinate
     private double y; //the y coordinate
@@ -21,6 +21,7 @@ public class Point  extends JComponent{
     private double classified2; //the classifier given by the perceptron
     private Map value;
     private int iteration;
+    private boolean missed = true;
 
     public Point(double x_, double y_, double o_, double p_)
     {
@@ -47,6 +48,8 @@ public class Point  extends JComponent{
         double d = DoubleCore.frame.getHeight();
         return value.map(x1,d,0);
     }
+    public void wasMissed ( boolean v ){ this.missed = v;}
+    public boolean missing (){return this.missed;    }
     public double getClassifier() { return this.classifier;   }
     public double getClassifier2(){return this.classifier2 ;   }
     public double getClassified(){return this.classified;}
@@ -110,15 +113,15 @@ public class Point  extends JComponent{
             g2.setColor(Color.cyan);
         }
         if (this.getClassifier()== 1&& this.getClassifier2()== -1){
-            g2.setColor(Color.blue);
+            g2.setColor(Color.orange);
         }
         g2.fill(b);
         g2.setColor(Color.black);
-        g2.draw(b);
-        g2.setStroke(new BasicStroke(4.0f));
-        g2.setColor(Color.black);
+        if (!missing())
+            g2.draw(b);
         g2.draw(line1());
         g2.draw(line2());
+        g2.setStroke(new BasicStroke(3.0f));
         g2.draw(guess1());
         g2.draw(guess2());
     }
