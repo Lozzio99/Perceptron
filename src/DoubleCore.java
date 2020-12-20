@@ -18,8 +18,8 @@ public class DoubleCore
     private Point[] points; // Create an ArrayList to store the points that will be drawn
     public static JFrame frame;
     private static double START;
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 700;
+    private static final int WIDTH = 780;
+    private static final int HEIGHT = 780;
     private double sum_Errors = 0 ;
     private double sum_Errors2 = 0;
     private static WindowEvent listen;

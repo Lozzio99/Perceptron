@@ -94,18 +94,10 @@ public class Point  extends JComponent{
         iteration++;
         Graphics2D g2 =(Graphics2D)  g;
         Ellipse2D.Double b ;
-        g2.setStroke(new BasicStroke(4.0f));
-        g2.setColor(Color.black);
-        g2.draw(line1());
-        g2.draw(line2());
-        g2.draw(guess1());
-        g2.draw(guess2());
-
-
         double frameX = setX(this.x);
         double frameY = setY(this.y);
         g2.setStroke(new BasicStroke(2.0f));
-        b = new Ellipse2D.Double(frameX,frameY, 12, 12);
+        b = new Ellipse2D.Double(frameX-6,frameY-6, 12, 12);
         if (this.getClassifier() == 1 && this.getClassifier2()== 1 )    //distinct colours for different classifiers
         {
             g2.setColor(Color.red);
@@ -115,17 +107,20 @@ public class Point  extends JComponent{
             g2.setColor(Color.green);
         }
         if (this.getClassifier2()== -1&& this.getClassifier()== -1){
-            g2.setColor(Color.red);
+            g2.setColor(Color.cyan);
         }
         if (this.getClassifier()== 1&& this.getClassifier2()== -1){
-            g2.setColor(Color.GREEN);
+            g2.setColor(Color.blue);
         }
         g2.fill(b);
-        if (this.getClassifier2()==this.getClassified2()&&this.getClassifier()==this.getClassified())
-        {
-            g2.setColor(Color.black);
-            g2.draw(b);
-        }
+        g2.setColor(Color.black);
+        g2.draw(b);
+        g2.setStroke(new BasicStroke(4.0f));
+        g2.setColor(Color.black);
+        g2.draw(line1());
+        g2.draw(line2());
+        g2.draw(guess1());
+        g2.draw(guess2());
     }
     private double f(double x) { return DoubleCore.f(x) ; }
     private double g (double x ){return DoubleCore.g(x);}

@@ -6,7 +6,7 @@ abstract class Neuron {
     public double sum_Errors;
     private double [] weights ;   //field for random weights
     public double [] w;          //field for established weights
-    private static final double learningK =0.005; //constant that determines how fast the neuron can learn, bigger is faster but less precise
+    private final double learningK =0.005; //constant that determines how fast the neuron can learn, bigger is faster but less precise
     public Neuron ()
     {
         //initialisation function for the neuron with given weights
