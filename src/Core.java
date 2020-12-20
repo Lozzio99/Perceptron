@@ -80,9 +80,10 @@ public class Core extends JFrame
     {
         //Fill the tests ArrayList with randomly spawned data values
         ArrayList<Dot[]> test= new ArrayList<>();
+        points = generate_random_test();
+
         while(test.size()<2000)
         {
-            points = generate_random_test();
             sum_Errors = 0;
             frame.repaint(); //call to update the graphics
             for (Dot p : points)
@@ -112,7 +113,7 @@ public class Core extends JFrame
     public Dot[] generate_random_test()
     {
         //function that generates random dataset of dataset values
-        Dot [] dataset = new Dot [200]; //Create a new ArrayList called dataset
+        Dot [] dataset = new Dot [500]; //Create a new ArrayList called dataset
         // adding too much data values in this array could lead to a late response from the graphics, but still possible
         for(int i = 0; i<dataset.length ; i++) {
             //create a new Point
