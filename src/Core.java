@@ -80,31 +80,29 @@ public class Core extends JFrame
     {
         //Fill the tests ArrayList with randomly spawned data values
         ArrayList<Dot[]> test= new ArrayList<>();
-        points = generate_random_test();
-
+        this.points = generate_random_test();
         while(test.size()<2000)
         {
-            sum_Errors = 0;
-            frame.repaint(); //call to update the graphics
-            for (Dot p : points)
+            this.sum_Errors = 0;
+            for (Dot p : this.points)
             {
                 //For each dataset in test
-                perceptron.train(p.getInput(), p.getClassifier());
+                this.perceptron.train(p.getInput(), p.getClassifier());
                 // train the Neuron with these values
                 // classifier is the third parameter in the point object(the correct answer is assigned here)
-                p.setAssignedClassified(perceptron.activation(p.getInput()));
+                p.setAssignedClassified(this.perceptron.activation(p.getInput()));
                 frame.add(p);
                 frame.pack();
-                sum_Errors += perceptron.getSum();
+                this.sum_Errors += this.perceptron.getSum();
                 frame.setVisible(true);
-
             }
-            test.add(points);
-            System.out.println("Errors : "+(int)(sum_Errors/2) + " weigths " + Arrays.toString(perceptron.get_weights()));
-            if (sum_Errors ==0)
+            frame.repaint();
+            test.add(this.points);
+            System.out.println("Errors : "+(int)(sum_Errors/2) + " weigths " + Arrays.toString(this.perceptron.get_weights()));
+            if (this.sum_Errors ==0)
             {
                 frame.setVisible(true);
-                System.out.println("process finished with weights"+ Arrays.toString(perceptron.get_weights()));
+                System.out.println("process finished with weights"+ Arrays.toString(this.perceptron.get_weights()));
                 break;
             }
         }
@@ -172,7 +170,6 @@ public class Core extends JFrame
         {
             return value.map(y1,frame.getHeight(),0);
         }
-
         public double getClassifier() { return this.classifier;   }
         public double getClassified(){return this.classified;}
         public void setAssignedClassified(double given) {this.classified = given;   }
