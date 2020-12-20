@@ -17,8 +17,8 @@ public class Core extends JFrame
     private  Dot [] points; // Create an ArrayList to store the points that will be drawn
     private static JFrame frame;
     private static double START;
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 700;
+    private static final int WIDTH = 780;
+    private static final int HEIGHT = 780;
     private  double sum_Errors = 0 ;
     private static WindowEvent listen;
 
@@ -165,11 +165,11 @@ public class Core extends JFrame
         }
         public double setX(double x1)
         {
-            return value.map(x1,0,700);
+            return value.map(x1,0,frame.getWidth());
         }
         public double setY (double y1)
         {
-            return value.map(y1,700,0);
+            return value.map(y1,frame.getHeight(),0);
         }
 
         public double getClassifier() { return this.classifier;   }
@@ -183,7 +183,7 @@ public class Core extends JFrame
             iteration++;
             Graphics2D g2 =(Graphics2D)  g;
             Ellipse2D.Double b ;
-            g2.setStroke(new BasicStroke(2.0f));
+            g2.setStroke(new BasicStroke(4.0f));
             Point2D.Double a = new Point2D.Double(setX(-1), setY(f(-1)));
             Point2D.Double a1 = new Point2D.Double(setX(1),setY(f(1)));
             Line2D.Double line = new Line2D.Double(a ,a1);
@@ -192,9 +192,10 @@ public class Core extends JFrame
             Line2D.Double guessLine = new Line2D.Double(setX(-1),setY(guessYLine),setX(1),setY(guessYLine2));
             g2.draw(guessLine);
             g2.draw(line);
+            g2.setStroke(new BasicStroke(2.0f));
             double lineX = setX(this.x);
             double lineY = setY(this.y);
-            b = new Ellipse2D.Double(lineX,lineY, 10, 10);
+            b = new Ellipse2D.Double(lineX-5,lineY-5, 10, 10);
             if (this.getClassifier() == 1)    //distinct colours for different classifiers
             {
                 g2.setColor(Color.red);
