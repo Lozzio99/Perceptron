@@ -24,6 +24,7 @@ public class DoubleCore
     private static WindowEvent listen;
     private boolean one = false;
     private boolean two = false;
+    private boolean changed = false;
 
     public static void main(String[] args)
     {
@@ -88,9 +89,6 @@ public class DoubleCore
         points = generate_random_test();
         while(test.size()<2000)
         {
-            this.sum_Errors = 0;
-            this.sum_Errors2= 0;
-            frame.repaint();
             evaluate(points);
             test.add(points);
             if (!one)
@@ -120,6 +118,8 @@ public class DoubleCore
     }
     public void evaluate (Point [] points)
     {
+        this.sum_Errors = 0;
+        this.sum_Errors2= 0;
         for (Point p : points)
         {
             //For each dataset in test
@@ -137,13 +137,23 @@ public class DoubleCore
             }
             // train the Neuron with these values
             // classifier is the third parameter in the point object(the correct answer is assigned here)
+            changed= false;
             if (p.getClassifier()== p.getClassified()&& p.getClassifier2()== p.getClassified2())
+            {
                 p.wasMissed(false);
+                changed = true;
+            }
             else
+            {
                 p.wasMissed(true);
+                changed = true;
+            }
             frame.pack();
-            frame.repaint();
-            frame.add(p);
+            if (changed)
+            {
+                frame.repaint();
+                frame.add(p);
+            }
             frame.setVisible(true);
         }
     }
