@@ -88,27 +88,25 @@ public class DoubleCore
         //points = generate_random_test();
         while(test.size()<2000)
         {
-            sum_Errors = 0;
-            sum_Errors2= 0;
+            this.sum_Errors = 0;
+            this.sum_Errors2= 0;
             frame.repaint();
             points = generate_random_test();
             for (Point p : points)
             {
-                p.setValue1(perceptron);
-                p.setValue2(perceptron2);
                 frame.repaint();
                 //For each dataset in test
                 if (!one)
                 {
                     perceptron.train(p.getInput(), p.getClassifier());
                     p.setAssignedClassified(perceptron.activation(p.getInput()));
-                    sum_Errors += perceptron.getSum();
+                    this.sum_Errors += perceptron.getSum();
                 }
                 if (!two)
                 {
                     perceptron2.train(p.getInput(), p.getClassifier2());
                     p.setAssignedClassified2(perceptron2.activation(p.getInput()));
-                    sum_Errors2 += perceptron2.sum_Errors;
+                    this.sum_Errors2 += perceptron2.sum_Errors;
                 }
                 // train the Neuron with these values
                 // classifier is the third parameter in the point object(the correct answer is assigned here)
@@ -121,13 +119,13 @@ public class DoubleCore
                 System.out.println("Errors > 1  -> [  "+(int)(sum_Errors/2)+" ]");
             if (!two)
                 System.out.println("Errors > 2  -> [  "+(int)(sum_Errors2/2)+" ]");
-            if (sum_Errors == 0 && !one)
+            if (this.sum_Errors == 0 && !one)
             {
                 one = true;
                 if (perceptron != null)
                 weights1 = perceptron.get_weights();
             }
-            if (sum_Errors2 == 0 && !two)
+            if (this.sum_Errors2 == 0 && !two)
             {
                 two = true;
                 if ( perceptron2 != null)
@@ -175,6 +173,8 @@ public class DoubleCore
                 classifier2 = -1;
             }
             dataset[i] = new Point(x, y, classifier, classifier2);
+            dataset[i].setValue1(perceptron);
+            dataset[i].setValue2(perceptron2);
             //add the dataset to the list of tests
         }
         return dataset; //return the list of tests

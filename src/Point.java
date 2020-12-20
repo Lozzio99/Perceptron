@@ -10,8 +10,8 @@ import java.awt.geom.Point2D;
 
 public class Point  extends JComponent{
 
-    private Neuron perceptron;
-    private Neuron perceptron2;
+    private static Neuron perceptron;
+    private static Neuron perceptron2;
     private double[] inputs; //create an array of input for the point, to show points on the screen
     private double x; //the x coordinate
     private double y; //the y coordinate
@@ -39,12 +39,12 @@ public class Point  extends JComponent{
 
     public double setX(double x1)
     {
-        double d = DoubleCore.frame.getWidth()-18;
+        double d = DoubleCore.frame.getWidth();
         return value.map(x1,0,d);
     }
     public double setY(double x1)
     {
-        double d = DoubleCore.frame.getHeight()-18;
+        double d = DoubleCore.frame.getHeight();
         return value.map(x1,d,0);
     }
     public double getClassifier() { return this.classifier;   }
@@ -94,7 +94,7 @@ public class Point  extends JComponent{
         iteration++;
         Graphics2D g2 =(Graphics2D)  g;
         Ellipse2D.Double b ;
-        g2.setStroke(new BasicStroke(2.0f));
+        g2.setStroke(new BasicStroke(4.0f));
         g2.setColor(Color.black);
         g2.draw(line1());
         g2.draw(line2());
@@ -104,6 +104,7 @@ public class Point  extends JComponent{
 
         double frameX = setX(this.x);
         double frameY = setY(this.y);
+        g2.setStroke(new BasicStroke(2.0f));
         b = new Ellipse2D.Double(frameX,frameY, 12, 12);
         if (this.getClassifier() == 1 && this.getClassifier2()== 1 )    //distinct colours for different classifiers
         {
