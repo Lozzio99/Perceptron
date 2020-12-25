@@ -2,15 +2,21 @@ package Perceptron.src;
 import Perceptron.src.lib.Matrix;
 import Perceptron.src.lib.data;
 
-class NeuralNetwork
+import java.util.Random;
+
+public class NeuralNetwork
 {
     private Matrix weights_ho;
     private Matrix weights_ih;
     private Matrix bias_hid;
     private Matrix bias_out;
 
-    private final double lk = 0.1;
+    private static double lk = 0.1;
 
+    public void setLearningRate(double lk)
+    {
+        this.lk = lk;
+    }
     public NeuralNetwork(int in_nodes, int hid_nodes, int out_nodes)
     {
         this.weights_ih = new Matrix(hid_nodes, in_nodes);
@@ -28,61 +34,53 @@ class NeuralNetwork
     {
         data[] tests = new data[4];
 
-
         // XOR                     inputs  v         targets v
-        tests[0] = new data(new double[] {1,0},new double []{0});
-        tests[1] = new data(new double[] {0,1},new double []{0});
-        tests[2] = new data(new double[] {1,1},new double []{1});
-        tests[3] = new data(new double[] {0,0},new double []{1});
+        tests[0] = new data(new double[] {1,1},new double []{1});
+        tests[1] = new data(new double[] {1,0},new double []{0});
+        tests[2] = new data(new double[] {0,1},new double []{1});
+        tests[3] = new data(new double[] {0,0},new double []{0});
 
 
-        Matrix [] in = new Matrix[4];
-        Matrix [] tg = new Matrix[4];
 
-        in [0] = new Matrix(tests[0].getInput());
-        tg [0] = new Matrix(tests[0].getTarget());
-        in [1] = new Matrix(tests[1].getInput());
-        tg [1] = new Matrix(tests[1].getTarget());
-        in [2] = new Matrix(tests[2].getInput());
-        tg [2] = new Matrix(tests[2].getTarget());
-        in [3] = new Matrix(tests[3].getInput());
-        tg [3] = new Matrix(tests[3].getTarget());
 
-        NeuralNetwork x = new NeuralNetwork(tests[0].getInput().length, 4, tests[0].getTarget().length);
-        for (int i = 0; i< 300000; i++)
+        Matrix [] in = new Matrix[tests.length];
+        Matrix [] tg = new Matrix[tests.length];
+
+        for (int i = 0; i< tests.length; i++)
         {
-            for (int k = 0; k< 4; k++)
-            {
-                x.train(in[k],tg[k]);
-            }
+            in [i] = new Matrix(tests[i].getInput());
+            tg [i] = new Matrix(tests[i].getTarget());
+        }
+
+        NeuralNetwork x = new NeuralNetwork(tests[0].getInput().length, 16, tests[0].getTarget().length);
+        for (int i = 0; i< 50000; i++)
+        {
+            int k = new Random().nextInt(tests.length);
+            x.train(in[k],tg[k]);
         }
 
         // simple XOR evaluation :)
-        x.feedforward(new double[]{1,0});
-        x.feedforward(new double[]{0,1});
-        x.feedforward(new double[]{1,1});
-        x.feedforward(new double[]{0,0});
+        for (int k = 0; k< tests.length; k++)
+        {
+            x.feedforward(tests[k].getInput()).printMatrix();
+        }
 
     }
-    private void feedforward(double [] input)
+    public Matrix feedforward(double [] input)
     {
         //generating hidden output
         Matrix inputs = new Matrix(input);
-        System.out.println(" inputs -> ");
-        inputs.printMatrix();
         Matrix hidden = Matrix.multiply(this.weights_ih,inputs);
         hidden = Matrix.add(hidden,this.bias_hid);
-        hidden= Matrix.map(hidden);
+        hidden = Matrix.map(hidden);
 
         //generating final output   NEW MATRIX RESULTING FROM THE EVOLVING OUTPUT
         Matrix outputs = Matrix.multiply(this.weights_ho,hidden);
         outputs = Matrix.add(outputs,this.bias_out);
         outputs= Matrix.map(outputs);
-        System.out.print(" evaluation ->  ");
-        outputs.printMatrix();
-        System.out.println();
+        return outputs;
     }
-    private void train (Matrix given , Matrix targets)
+    public void train(Matrix given, Matrix targets)
     {
         //generating hidden output
         Matrix inputs = given;
