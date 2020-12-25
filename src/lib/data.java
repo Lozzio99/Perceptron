@@ -1,4 +1,4 @@
-package Perceptron.src;
+package Perceptron.src.lib;
 
 public class data {
     double [] input;
