@@ -38,7 +38,7 @@ public class Xor
     }
     public void visualize ()
     {
-        System.out.println("--");
+        System.out.println(" . . . gimme one sec c: ");
         graphic gfx= new graphic();
         frame.add(gfx);
         frame.repaint();
@@ -93,13 +93,15 @@ public class Xor
         public NeuralNetwork brain;
         public graphic()
         {
-            this.brain = new NeuralNetwork(2,2,1);
+            // the more hidden nodes the more it's accurate
+            this.brain = new NeuralNetwork(2,256,1);
             double r = 0.01;
-            for (int i = 0; i< 100000; i++)
+            //give it a bit to run
+            for (int i = 0; i< 50000; i++)
             {
-                if(i%10000 == 0)
+                if(i%10000 == 0&& r <= 0.6)
                 {
-                    r += 0.03;
+                    r += 0.02;
                     brain.setLearningRate(r);
                 }
                 int k = new Random().nextInt(tests.length);
