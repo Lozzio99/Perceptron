@@ -8,6 +8,7 @@ public class data {
         this.input = inputs;
         this.target = target;
     }
+
     public double [] getInput()
     {
         return this.input;
