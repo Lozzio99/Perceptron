@@ -1,4 +1,6 @@
-package Perceptron.src;
+package Perceptron.src.nodes;
+import Perceptron.src.lib.Map;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -147,7 +149,7 @@ public class Core extends JFrame
         public double classifier; //1 or -1 depending on the output of the Perceptron weights
         public double classified; //the classifier given by the perceptron
         public int iteration;
-        public Map value;
+        public Perceptron.src.lib.Map value;
 
         public Dot(double x_, double y_, double o_)
         {

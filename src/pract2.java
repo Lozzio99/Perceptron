@@ -1,4 +1,6 @@
 package Perceptron.src;
+import Perceptron.src.nodes.Neuron;
+
 import java.util.Arrays;
 import static java.util.concurrent.TimeUnit.*;
 /**

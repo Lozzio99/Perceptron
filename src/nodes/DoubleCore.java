@@ -1,4 +1,7 @@
-package Perceptron.src;
+package Perceptron.src.nodes;
+
+import Perceptron.src.graphic.Point;
+
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
