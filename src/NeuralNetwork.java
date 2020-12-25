@@ -39,10 +39,6 @@ public class NeuralNetwork
         tests[1] = new data(new double[] {1,0},new double []{0});
         tests[2] = new data(new double[] {0,1},new double []{1});
         tests[3] = new data(new double[] {0,0},new double []{0});
-
-
-
-
         Matrix [] in = new Matrix[tests.length];
         Matrix [] tg = new Matrix[tests.length];
 
@@ -64,7 +60,6 @@ public class NeuralNetwork
         {
             x.feedforward(tests[k].getInput()).printMatrix();
         }
-
     }
     public Matrix feedforward(double [] input)
     {
@@ -94,7 +89,9 @@ public class NeuralNetwork
         Matrix outputs =Matrix.multiply(this.weights_ho,hidden);
         outputs = Matrix.add(outputs,this.bias_out);
         outputs= Matrix.map(outputs);
-        // map(E-O)(dfunc)OH^
+
+        //   map((E-O)(dfunc(O))H^)
+
         //calculate out error
         //E-O
         Matrix tgt = new Matrix(targets.getMatrix());

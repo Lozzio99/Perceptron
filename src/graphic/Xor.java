@@ -27,19 +27,15 @@ public class Xor
     {
         setup();
         new Xor();
-
     }
     public Xor ()
     {
-
         test_data();
         visualize();
-
     }
     public void visualize ()
     {
-        System.out.println(" . . . gimme one sec c: ");
-        graphic gfx= new graphic();
+        graphic gfx = new graphic();
         frame.add(gfx);
         frame.repaint();
         frame.setVisible(true);
@@ -47,7 +43,7 @@ public class Xor
     public void test_data ()
     {
         this.tests = new data[4];
-        // XOR                     inputs  v         targets v
+        // XOR                          inputs  v         targets v
         this.tests[0] = new data(new double[] {1,1},new double []{0});
         this.tests[1] = new data(new double[] {1,0},new double []{1});
         this.tests[2] = new data(new double[] {0,1},new double []{1});
@@ -96,7 +92,8 @@ public class Xor
             // the more hidden nodes the more it's accurate
             this.brain = new NeuralNetwork(2,256,1);
             double r = 0.01;
-            //give it a bit to run
+            //give it a bit to run        768 weights 50k batches
+            System.out.println(" . . . gimme one sec c: ");
             for (int i = 0; i< 50000; i++)
             {
                 if(i%10000 == 0&& r <= 0.6)
@@ -123,7 +120,7 @@ public class Xor
                     double x2 = k/(double)rows;
                     double [] inputs = new double[]{x1,x2};
                     int y = (int)(this.brain.feedforward(inputs).getMatrix()[0][0]*255);
-                    Color r = new Color(y,0,130);
+                    Color r = new Color(0,y,130);
                     g2.setColor(r);
                     g2.fillRect(i*resolution,k*resolution,resolution,resolution);
                 }
