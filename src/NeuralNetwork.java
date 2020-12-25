@@ -1,7 +1,6 @@
 package Perceptron.src;
 import Perceptron.src.lib.Matrix;
-
-import java.util.Random;
+import Perceptron.src.lib.data;
 
 class NeuralNetwork
 {
