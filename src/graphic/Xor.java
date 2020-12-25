@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JComponent;
 import java.awt.Color;
@@ -17,13 +16,12 @@ import java.awt.Graphics2D;
 public class Xor
 {
     private static WindowEvent listen;
-    private static graphic gfx ;
     public static JFrame frame;
     public static int WIDTH = 700;
     public static int HEIGHT = 700;
-    public static Matrix[] in;
-    public static Matrix[] tg;
-    public static data[] tests;
+    public Matrix[] in;
+    public Matrix[] tg;
+    public data[] tests;
 
     public static void main (String [] args)
     {
@@ -96,12 +94,12 @@ public class Xor
         public graphic()
         {
             this.brain = new NeuralNetwork(2,2,1);
-            double r = 0.1;
-            for (int i = 0; i< 50000; i++)
+            double r = 0.01;
+            for (int i = 0; i< 100000; i++)
             {
                 if(i%10000 == 0)
                 {
-                    r += 0.1;
+                    r += 0.03;
                     brain.setLearningRate(r);
                 }
                 int k = new Random().nextInt(tests.length);
@@ -123,7 +121,7 @@ public class Xor
                     double x2 = k/(double)rows;
                     double [] inputs = new double[]{x1,x2};
                     int y = (int)(this.brain.feedforward(inputs).getMatrix()[0][0]*255);
-                    Color r = new Color(y,y,y);
+                    Color r = new Color(y,0,130);
                     g2.setColor(r);
                     g2.fillRect(i*resolution,k*resolution,resolution,resolution);
                 }
