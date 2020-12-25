@@ -1,7 +1,7 @@
-package Perceptron.src;
+package Perceptron.src.nodes;
 import java.util.Random;
 
-abstract class Neuron {
+abstract public class Neuron {
     //create an abstract Class Neuron that represents the process of the Hebbian learning rule
     public double sum_Errors;
     private double [] weights ;   //field for random weights
@@ -10,7 +10,7 @@ abstract class Neuron {
     public Neuron ()
     {
         //initialisation function for the neuron with given weights
-        this.w = new double []{-0.3,0.1,0.3};
+        //this.w = new double []{-0.3,0.1,0.3};
         this.sum_Errors = 0;
     }
     public Neuron(int numOfInputs)

@@ -1,4 +1,8 @@
-package Perceptron.src;
+package Perceptron.src.graphic;
+import Perceptron.src.lib.Map;
+import Perceptron.src.nodes.DoubleCore;
+import Perceptron.src.nodes.Neuron;
+
 import javax.swing.JComponent;
 import java.awt.BasicStroke;
 import java.awt.Color;
