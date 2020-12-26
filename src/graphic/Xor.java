@@ -39,13 +39,11 @@ public class Xor
     public void visualize ()
     {
         graphic gfx = new graphic();
-
-        while (true)
-        {
+        do {
             gfx.evaluate();
             frame.add(gfx);
             frame.setVisible(true);
-        }
+        } while (true);
     }
     public void test_data ()
     {
