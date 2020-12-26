@@ -1,24 +1,27 @@
 package Perceptron.src.graphic;
-
 import Perceptron.src.NeuralNetwork;
 import Perceptron.src.lib.Matrix;
 import Perceptron.src.lib.data;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
-import javax.swing.JComponent;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.JFrame;
+
 
 public class Xor
 {
     private static WindowEvent listen;
     public static JFrame frame;
+    public double r = 0.01;
     public static int WIDTH = 700;
     public static int HEIGHT = 700;
+    public int iteration = 1;
     public Matrix[] in;
     public Matrix[] tg;
     public data[] tests;
@@ -36,9 +39,13 @@ public class Xor
     public void visualize ()
     {
         graphic gfx = new graphic();
-        frame.add(gfx);
-        frame.repaint();
-        frame.setVisible(true);
+
+        while (true)
+        {
+            gfx.evaluate();
+            frame.add(gfx);
+            frame.setVisible(true);
+        }
     }
     public void test_data ()
     {
@@ -90,19 +97,22 @@ public class Xor
         public graphic()
         {
             // the more hidden nodes the more it's accurate
-            this.brain = new NeuralNetwork(2,256,1);
-            double r = 0.01;
-            //give it a bit to run        768 weights 50k batches
-            System.out.println(" . . . gimme one sec c: ");
-            for (int i = 0; i< 50000; i++)
+            this.brain = new NeuralNetwork(2,128,1);
+        }
+        public void evaluate ()
+        {
+            //give it a bit to run
+            if (iteration%100 == 0)
             {
-                if(i%10000 == 0&& r <= 0.6)
-                {
-                    r += 0.02;
-                    brain.setLearningRate(r);
-                }
-                int k = new Random().nextInt(tests.length);
-                brain.train(in[k],tg[k]);
+                System.out.println(iteration + "  - learning rate : "+ r);
+            }
+            iteration++;
+            int k = new Random().nextInt(tests.length);
+            brain.train(in[k],tg[k]);
+            if(r<0.5)
+            {
+                r +=0.0001;
+                brain.setLearningRate(r);
             }
         }
 
@@ -120,11 +130,14 @@ public class Xor
                     double x2 = k/(double)rows;
                     double [] inputs = new double[]{x1,x2};
                     int y = (int)(this.brain.feedforward(inputs).getMatrix()[0][0]*255);
-                    Color r = new Color(0,y,130);
+                    Color r = new Color(255-y,y,y/2);
                     g2.setColor(r);
                     g2.fillRect(i*resolution,k*resolution,resolution,resolution);
+                    g2.setColor(Color.white);
+                    g2.drawRect(i*resolution,k*resolution,resolution,resolution);
                 }
             }
+            frame.repaint();
 
         }
 
